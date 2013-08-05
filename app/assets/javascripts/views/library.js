@@ -4,21 +4,18 @@ app.LibraryView = Backbone.View.extend({
     el: '#books',
 
     events: {
-        'ajax:beforeSend #addBook': 'onBeforeSendAddBook',
         'ajax:success #addBook': 'onSuccessAddBook'
     },
 
-    onBeforeSendAddBook: function(xhr, settings) {
-        //settings.dataType = 'json';
-        console.log('onBeforeSendAddBook', settings);
-        return true;
-    },
+    onSuccessAddBook: function(ev, data, status) {
+        console.log('onSuccessAddBook', data, status);
+        if (status === "success") {
+            //TODO: fix code to remove this workaround.
+            data.cover_image = data.cover_image.cover_image;
 
-    onSuccessAddBook: function(data, status, xhr) {
-        console.log('onSuccessAddBook', data);
-        this.collection.add( new app.Book( window.book ) );
-        delete window.book;
-        //this.collection.fetch({reset: true});
+            // This is not enough when other users modified books.
+            this.collection.add( new app.Book( data ) );
+        }
     },
 
     initialize: function() {
