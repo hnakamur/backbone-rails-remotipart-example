@@ -14,4 +14,10 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require turbolinks
-//= require_tree .
+//= require backbone-rails
+//= require templates/book
+//= require models/book
+//= require collections/library
+//= require views/book
+//= require views/library
+//= require app

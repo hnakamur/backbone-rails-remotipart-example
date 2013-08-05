@@ -46,3 +46,5 @@ end
 
 gem 'carrierwave'
 gem 'remotipart', '~> 1.2'
+gem 'ejs'
+gem 'backbone-rails'
