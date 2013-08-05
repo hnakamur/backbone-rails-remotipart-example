@@ -1,7 +1,1 @@
-// Display a Javascript alert
-alert('create success!');
-<% if remotipart_submitted? %>
-  alert('submitted via remotipart')
-<% else %>
-  alert('submitted via native jquery-ujs')
-<% end %>
+window.book=<%= raw @book.to_json %>

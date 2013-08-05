@@ -3,29 +3,31 @@ var app = app || {};
 app.LibraryView = Backbone.View.extend({
     el: '#books',
 
-    events:{
-        'click #add':'addBook'
+    events: {
+        'ajax:beforeSend #addBook': 'onBeforeSendAddBook',
+        'ajax:success #addBook': 'onSuccessAddBook'
     },
 
-    addBook: function( e ) {
-        e.preventDefault();
-
-        var formData = {};
-
-        $( '#addBook div' ).children( 'input' ).each( function( i, el ) {
-            if( $( el ).val() != '' )
-            {
-                formData[ el.id ] = $( el ).val();
-            }
-        });
-
-        this.collection.add( new app.Book( formData ) );
+    onBeforeSendAddBook: function(xhr, settings) {
+        //settings.dataType = 'json';
+        console.log('onBeforeSendAddBook', settings);
+        return true;
     },
 
-    initialize: function( initialBooks ) {
-        this.collection = new app.Library( initialBooks );
-        this.listenTo( this.collection, 'add', this.renderBook );
+    onSuccessAddBook: function(data, status, xhr) {
+        console.log('onSuccessAddBook', data);
+        this.collection.add( new app.Book( window.book ) );
+        delete window.book;
+        //this.collection.fetch({reset: true});
+    },
+
+    initialize: function() {
+        this.collection = new app.Library();
+        this.collection.fetch({reset: true});
+
         this.render();
+        this.listenTo( this.collection, 'add', this.renderBook );
+        this.listenTo( this.collection, 'reset', this.render );
     },
 
     // render library by rendering each book in its collection
