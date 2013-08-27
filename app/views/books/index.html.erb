@@ -12,3 +12,11 @@
     <button id="add">Add</button>
   </form>
 </div>
+<% content_for :dynamic_javascripts do %>
+  <%= javascript_include_tag "templates/book" %>
+  <%= javascript_include_tag "models/book" %>
+  <%= javascript_include_tag "collections/library" %>
+  <%= javascript_include_tag "views/book" %>
+  <%= javascript_include_tag "views/library" %>
+  <%= javascript_include_tag "app" %>
+<% end %>
